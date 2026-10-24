@@ -36,11 +36,25 @@ Then invoke it in a prompt with:
 @academic-student-writer
 ```
 
-For project-only installation, use `.opencode/skills/academic-student-writer/` inside the project. See the [OpenCode integration notes](docs/integration-guide.md#opencode-setup-current-docs-checked-2026-10-24) for details.
+For project-only installation, use `.opencode/skills/academic-student-writer/` inside the project. See the [OpenCode integration notes](docs/integration-guide.md#install-by-tool) for details.
 
 ### Other agent tools
 
-The repository includes setup notes for Claude, Claude Code, Codex and other `AGENTS.md`-based tools, Cursor, GitHub Copilot, Gemini CLI, Cline, Roo, and plain chat. Follow [`docs/integration-guide.md`](docs/integration-guide.md) and use the matching file under [`integrations/`](integrations/).
+Copy the complete skill folder, including `SKILL.md`, `docs/`, `scripts/`, `templates/`, and `evals/`. The paths below are relative to your home directory for personal installs and to your repository root for project installs. On Windows, `~` means `%USERPROFILE%`.
+
+| Tool | Project install | Personal or global install | How to invoke it |
+|---|---|---|---|
+| [Codex](https://learn.chatgpt.com/docs/build-skills) | `.agents/skills/academic-student-writer/` | `~/.agents/skills/academic-student-writer/` | In Codex CLI or IDE, type `$academic-student-writer`; use `/skills` to browse available skills. |
+| [Claude Code](https://code.claude.com/docs/en/skills) | `.claude/skills/academic-student-writer/` | `~/.claude/skills/academic-student-writer/` | Type `/academic-student-writer`, or let Claude select it based on the request. |
+| [OpenCode](https://opencode.ai/v2/docs/skills) | `.opencode/skills/academic-student-writer/` | `~/.config/opencode/skills/academic-student-writer/` | Type `@academic-student-writer`. |
+| [Cline](https://docs.cline.bot/customization/skills) | `.cline/skills/academic-student-writer/` | `~/.cline/skills/academic-student-writer/` | Choose it from the Skills menu, type `/academic-student-writer`, or let Cline match the request. |
+| [Roo Code](https://docs.roocode.com/features/skills) | `.roo/skills/academic-student-writer/` | `~/.roo/skills/academic-student-writer/` | Type `/academic-student-writer` or let Roo match the request. `.agents/skills/` is also supported for cross-agent sharing. |
+| [Cursor](https://prod.cursor.com/docs/rules) | Copy the skill folder to `.agents/skills/academic-student-writer/`; copy `integrations/academic-writer.mdc` to `.cursor/rules/academic-writer.mdc`. | Add the rule under Cursor's User Rules and put the skill folder in a readable location. | Ask Cursor to use the Academic Student Writer instructions. Replace `<SKILL_DIR>` in the rule with the skill folder path. |
+| [GitHub Copilot](https://docs.github.com/en/copilot/concepts/prompting-and-context/custom-instructions?tool=vscode) | Copy the skill folder to `.agents/skills/academic-student-writer/`; add `integrations/copilot-instructions.md` as `.github/copilot-instructions.md`. | Add the instruction text to your Copilot custom-instructions settings and keep the skill folder at a readable path. | Ask Copilot to use Academic Student Writer. Replace `<SKILL_DIR>` in the instruction text with the skill folder path. |
+| [Gemini CLI](https://geminicli.com/docs/cli/gemini-md/) | Copy `integrations/GEMINI.md` to the project root as `GEMINI.md`; keep the skill folder in a readable path. | Add the instructions to `~/.gemini/GEMINI.md` and keep the skill folder in a readable path. | Ask Gemini CLI to use Academic Student Writer. Replace `<SKILL_DIR>` in `GEMINI.md` with the skill folder path. |
+| Claude Projects | Add `SKILL.md` and the task-relevant supporting files to Project knowledge; paste `integrations/CLAUDE.md` into Project instructions. | — | Ask Claude to use Academic Student Writer. Claude Projects use uploaded context and project instructions rather than the Claude Code local skill directory. |
+
+For Cursor, Copilot, and Gemini CLI, replace `<SKILL_DIR>` in the integration file with the folder path where you copied the skill. Claude Projects use uploaded files and project instructions instead of a local skill path. Tool support and settings vary by client; see [`docs/integration-guide.md`](docs/integration-guide.md) and the matching file under [`integrations/`](integrations/) for details. If a tool has no file access, use the [plain-chat instructions](docs/integration-guide.md#prompts-that-work-in-any-tool).
 
 ## First use
 

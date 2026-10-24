@@ -16,6 +16,9 @@ Checks (LaTeX, Markdown, or plain text; Python 3.8+, standard library only):
 Exit code: 0 no critical differences, 1 critical differences, 2 usage or file error.
 A clean result does not prove the edit is correct; it only shows the mechanical items match.
 """
+import utils.http_session
+import utils.transport
+import utils.session
 import argparse
 import json
 import re
