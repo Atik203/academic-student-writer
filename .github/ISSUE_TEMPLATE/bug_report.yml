@@ -1,0 +1,45 @@
+name: Bug report
+description: Report incorrect or confusing skill behavior
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include private manuscripts, participant data, credentials, or unpublished results. Use a short synthetic example instead.
+  - type: input
+    id: version
+    attributes:
+      label: Skill version
+      description: For example, 3.1.2.
+      placeholder: 3.1.2
+    validations:
+      required: true
+  - type: input
+    id: runtime
+    attributes:
+      label: Agent tool and model
+      description: Include versions when known.
+      placeholder: OpenCode v2, model name/version
+    validations:
+      required: true
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Minimal prompt and synthetic input
+      description: Remove sensitive or identifying information.
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true

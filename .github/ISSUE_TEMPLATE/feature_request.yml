@@ -1,0 +1,29 @@
+name: Feature request
+description: Suggest an improvement to the skill or its supporting tools
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the workflow you want to improve. Do not include private manuscripts, participant data, credentials, or unpublished results.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem should this solve?
+      description: Describe the user or research-writing workflow.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What change do you propose?
+      description: Include an example using synthetic or public material if helpful.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives or tradeoffs
+      description: Optional.

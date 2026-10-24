@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this skill, please cite it as software."
+title: "Academic Student Writer"
+type: software
+version: "3.1.2"
+date-released: "2026-10-24"
+license: MIT
+authors:
+  - name: "Academic Student Writer contributors"

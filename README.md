@@ -1,51 +1,86 @@
-# Academic Student Writer v3.1.2
+# Academic Student Writer
 
-An agent skill for clear, accurate, unambiguous research writing. The agent first reads the whole research project (manuscript, code, results, data docs, bibliography, earlier writing), builds a project brief and a voice profile, then drafts, edits, clarifies, or audits in the author's own voice. It includes detector awareness so that the agent writes from evidence and never games a detector.
+**A research-writing skill for CSE and other technical fields.** It helps an AI agent understand a research project before drafting or editing, keep claims tied to evidence, preserve the author's voice, and make technical writing clearer.
 
-## Start here
+The skill supports papers, theses, reports, abstracts, LaTeX manuscripts, and related research writing. It is designed to work across file-capable agent tools; instructions for each supported tool are in [`docs/integration-guide.md`](docs/integration-guide.md).
 
-1. Copy this whole folder where your agent can read it (see `docs/integration-guide.md` for Claude, Claude Code, OpenCode, Codex, Cursor, Copilot, Gemini CLI, Cline, or plain chat).
-2. Make the research project visible to the agent.
-3. Use the first prompt in `docs/integration-guide.md` ("understand first"), then ask for edits, drafts, or audits.
+## What it does
 
-## Files
+- Reads project materials such as the manuscript, code, results, data documentation, bibliography, and earlier author-written text before substantive drafting or review.
+- Builds a source-linked project brief and a voice profile before writing.
+- Supports editing, evidence-grounded drafting, clarity repair, and structured audits.
+- Preserves numbers, equations, citation keys, claim strength, and terminology; marks missing facts instead of inventing them.
+- Treats AI-writing detector output cautiously and never provides detector-bypass instructions or score guarantees.
 
-| Path | Purpose |
-|---|---|
-| `SKILL.md` | Entry point. Self-sufficient: goal, non-negotiables, pre-writing checklist, modes, rules, detector context, audit, priorities |
-| `docs/project-intake.md` | How agents read the project and build the brief |
-| `docs/voice-calibration.md` | How agents learn the author's voice from the author's own writing |
-| `docs/clarity-playbook.md` | Ambiguity patterns, flow, tense, reviewer-proofing |
-| `docs/weak-model-playbook.md` | Plain-language mistakes list, procedures, paragraph builder, and examples for smaller or less capable agents |
-| `docs/prompt.md` | Detailed prose, citation, technical rules and examples |
-| `docs/writing-guide.md` | Supervisor-derived G0-G15 structure guide, with project-specific details excluded and interpretation notes documented separately |
-| `docs/guide-addenda.md` | Proposed notes on gaps in the locked guide |
-| `docs/detector-awareness.md` | Stable detector and authorship policy |
-| `docs/detector-log.md` | Dated vendor facts with verification status |
-| `docs/evaluation-guide.md` | Rubric and regression tests |
-| `docs/integration-guide.md`, `integrations/` | Setup for many agent tools |
-| `templates/` | Project brief, voice profile, AI-use ledger, claim-evidence map, metric-audit manifest |
-| `scripts/` | `project_scan.py`, `integrity_check.py`, `pattern_scan.py`, `metric_consistency.py` (Python 3.8+, stdlib only) |
-| `evals/` | Regression cases, privacy and metric-audit fixtures, and `run_selftest.sh` for the scripts |
+## Install
 
-## Design choices
+Keep the complete repository together so the skill can access its supporting guides, templates, scripts, and examples.
 
-- The agent reads the project instead of interviewing the author, and asks only what the files cannot answer.
-- Source authority depends on the claim type and the run/version provenance. The skill records conflicts rather than applying a universal file-type ranking.
-- Pattern-level checks (generic frames, summary-closers, participial tails, vague quantifiers) come before the word avoid-list, and none of them is a quota or ban.
-- Authorship rungs A-D make the policy and detector risk of each workflow explicit.
-- The skill does not promise detector scores and does not provide bypass methods. Detector context exists so the agent writes specific, grounded, author-voiced text and records its process honestly.
+### OpenCode
 
-## Quick checks
+Copy the repository to OpenCode's global skills directory:
 
-```bash
-bash evals/run_selftest.sh
-python scripts/project_scan.py <project_root> --out writing-support/PROJECT_INVENTORY.md
-python scripts/integrity_check.py original.tex edited.tex
-python scripts/pattern_scan.py section.tex
-python scripts/metric_consistency.py --root <project_root> --manifest writing-support/metric-audit.csv
+```text
+~/.config/opencode/skills/academic-student-writer/
 ```
 
-## Limits
+On Windows, the corresponding location is:
 
-The scripts make defined checks; they do not prove every claim is true. Project inventory output lists metadata and paths, not README excerpts or raw result rows. The metric audit checks only explicitly mapped claims in the supplied manifest. No skill can guarantee identical behavior across models. Test your actual model and runtime with `docs/evaluation-guide.md`. No detector result is proof of authorship, and no writing rule can guarantee a score. Follow your institution's AI-use and disclosure policy.
+```text
+%USERPROFILE%\.config\opencode\skills\academic-student-writer\
+```
+
+Then invoke it in a prompt with:
+
+```text
+@academic-student-writer
+```
+
+For project-only installation, use `.opencode/skills/academic-student-writer/` inside the project. See the [OpenCode integration notes](docs/integration-guide.md#opencode-setup-current-docs-checked-2026-10-24) for details.
+
+### Other agent tools
+
+The repository includes setup notes for Claude, Claude Code, Codex and other `AGENTS.md`-based tools, Cursor, GitHub Copilot, Gemini CLI, Cline, Roo, and plain chat. Follow [`docs/integration-guide.md`](docs/integration-guide.md) and use the matching file under [`integrations/`](integrations/).
+
+## First use
+
+Give the agent access to the research project and ask it to understand the evidence before editing. For example:
+
+> Use the academic-student-writer skill. Read the project and produce `PROJECT_BRIEF.md` and `VOICE_PROFILE.md`. List conflicts between sources and questions only I can answer. Do not edit the manuscript yet.
+
+For substantive work, the skill asks the agent to work from evidence, mark unknowns, and follow the venue or supervisor's structure. Choose the requested mode:
+
+| Mode | Use |
+|---|---|
+| 0 — Understand | Build the project brief and voice profile; identify conflicts and open questions. |
+| 1 — Edit and polish | Improve supplied writing while preserving its meaning and claim strength. |
+| 2 — Draft from evidence | Draft new text using project evidence and verified sources; mark gaps. |
+| 3 — Repair clarity | Rebuild confusing text from its claims, evidence, and sentence relationships. |
+| 4 — Audit | Report issues by severity without rewriting the whole manuscript. |
+
+See [`SKILL.md`](SKILL.md) for the complete rules and [`docs/integration-guide.md`](docs/integration-guide.md) for prompt examples.
+
+## Repository contents
+
+- `SKILL.md` — main instructions and task routing.
+- `docs/` — project intake, voice calibration, clarity, research structure, evaluation, and detector guidance.
+- `templates/` — project brief, voice profile, claim-evidence map, metric audit, and AI-use ledger templates.
+- `scripts/` — optional project inventory and writing-integrity utilities.
+- `evals/` — example cases and script self-tests.
+- `integrations/` — short setup files for agent tools.
+
+The optional Python scripts use the Python standard library and support Python 3.8 or newer. They provide defined checks, not proof that every research claim is correct. Read [`docs/evaluation-guide.md`](docs/evaluation-guide.md) before interpreting results.
+
+## Research integrity and privacy
+
+The skill does not invent findings, citations, methods, metrics, or explanations. It does not help hide AI involvement or evade an institution's disclosure rules. Detector estimates are not proof of authorship, and the skill does not promise a detector score.
+
+Do not submit confidential manuscripts, participant data, credentials, or other sensitive material in public issues or pull requests. Follow the repository's [`SECURITY.md`](SECURITY.md) for vulnerability reports and your institution's rules for research data and AI use.
+
+## Contributing
+
+Bug reports, documentation improvements, and carefully scoped contributions are welcome. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening an issue or pull request. Contributions must preserve evidence fidelity and must not add detector-evasion instructions.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
