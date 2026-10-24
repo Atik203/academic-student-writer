@@ -1,0 +1,2 @@
+claim_id,source_csv,source_value_column,source_filters,manuscript_file,prose_anchor,table_label,table_row_anchor,unit,notes
+A-ECXGB,evals/fixtures/project_demo/results/metrics.csv,macro_f1,dataset=A;model=ecxgb,evals/fixtures/metric_audit/main_metrics_bad_prose.tex,"On Dataset-A, EC-XGB reaches macro-F1",tab:main,"Dataset-A & ecxgb",macro-F1,Expected failure fixture

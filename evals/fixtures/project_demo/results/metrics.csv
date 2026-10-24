@@ -1,0 +1,5 @@
+dataset,model,macro_f1
+A,baseline,0.81
+A,ecxgb,0.84
+B,baseline,0.78
+B,ecxgb,0.79

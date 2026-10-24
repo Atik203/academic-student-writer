@@ -1,0 +1,110 @@
+# AI-Detector Awareness and Authorship Policy
+
+**Last reviewed:** 2026-10-24. Vendor details are in `docs/detector-log.md`; this file holds the stable policy an agent should keep in mind before and while writing. The Turnitin facts below were checked against the official pages linked here on 2026-10-24.
+
+## Contents
+1. Principle
+2. How modern detectors behave
+3. Turnitin facts supported by current official documentation
+4. Common quality weaknesses in unstructured LLM drafts
+5. What the agent does
+6. What the agent must not do
+7. Handling common requests
+8. If text was already flagged
+9. Limits and fairness
+10. Process record
+11. Tools to recognize
+
+## 1. Principle
+
+Improve the paper, not a score. A detector estimates whether text resembles patterns associated with machine generation. It does not observe authorship, understanding, truth, or originality. A low score does not prove integrity, and a high score does not prove misconduct. This skill never promises a score, never calls text "undetectable", and never uses evasion tactics.
+
+## 2. How modern detectors behave
+
+- These products estimate likely text origin using a product-specific model or classifier. Reporting may include a document-level indicator and, depending on the product and version, sentence or passage highlights.
+- Results depend on tool, model version, language, text length, and document type. Some vendors caution that sentence- or passage-level outputs are less reliable than document-level outputs; independent findings vary by dataset and language. Do not generalize a result beyond the tool and evaluation conditions that support it.
+- Some products document features related to AI paraphrasing or bypasser-modified text. Availability and presentation vary by product, language, license, and version. For Turnitin, use the dated facts in section 3 rather than generalizing older categories to the current report. Do not assume that any particular rewriting tool will or will not be detected. Using a tool to conceal AI involvement when disclosure is required violates this skill's integrity policy.
+- Vendors update models often, and vendor accuracy figures come from their own benchmarks. Treat them as claims until independently replicated.
+
+A few broad concepts are discussed in the detector literature, but vendor-specific features and decision rules are not fully public and vary by product/version. Treat the following as a **non-exhaustive conceptual overview**, not a confirmed list of signals used by every tool:
+
+- Some systems use statistical or learned text features that distinguish their training examples.
+- Classifiers may behave differently across document lengths, genres, languages, and mixtures of human- and AI-written material.
+- Some products offer sentence/passage highlighting or categories related to AI-assisted paraphrasing; the exact scope and reporting behavior must be checked in current vendor documentation.
+- A human writer's specificity, project evidence, and author voice are good writing-quality goals, but do not reliably predict any detector's output.
+
+The correct response is to improve evidence, clarity, reasoning, and authorship transparency. Do not infer that adding variation, a particular connector, or specific numbers will change a detector score.
+
+## 3. Turnitin facts supported by current official documentation
+
+**Checked 2026-10-24.** These are documented product facts, not independent validation of detector accuracy.
+
+- **Current submission requirements:** Turnitin says an AI Writing Report requires at least 300 words of qualifying prose in a long-form writing format. Its current file-requirements page also lists a file-size limit below 100 MB, a 30,000-word maximum, supported languages, and accepted file types. See [File requirements for an AI Writing Report](https://guides.turnitin.com/hc/en-us/articles/28234943089933-File-requirements-for-an-AI-Writing-Report).
+- **Current English report presentation:** On 4 August 2026 (2026-08-04), Turnitin replaced the previous two-color English report with a single unified set of blue highlights for likely AI-generated content, including text that may have been further modified by AI paraphrasers or bypassers. Do not describe a separate current purple category as if it remains the current English report display. Bypasser and AI-paraphrasing detection capabilities described here apply to the English detector. See [Turnitin product updates](https://guides.turnitin.com/hc/en-us/articles/29645383597965-Turnitin-product-updates) and [AI writing detection model release notes](https://guides.turnitin.com/hc/en-us/articles/28294949544717-AI-writing-detection-model).
+- **Current model-update note:** Turnitin's English AI-writing model release notes list an update dated 14 October 2026. The vendor says the English model was improved while minimizing false positives and that existing reports are not retroactively updated; resubmission is required to obtain a score generated by the update. This reports what Turnitin states, not an independent performance finding. See [AI writing detection model release notes](https://guides.turnitin.com/hc/en-us/articles/28294949544717-AI-writing-detection-model).
+- **Historical note about short submissions:** On 15 December 2023, Turnitin documented a bug that had allowed some submissions with fewer than 300 words to be processed between 6 and 15 December 2023, and said such scores were likely less accurate. The vendor stated the bug was resolved. Treat that as a historical incident, not a current exception to the 300-word requirement.
+- **Historical note about generic openings/closings:** On 24 May 2023, Turnitin reported a higher incidence of false positives in the first or last few sentences, often where introduction or conclusion content was generic, and said it changed its detection logic to reduce those false positives. This is a historical vendor-reported issue and mitigation, not evidence that current Turnitin versions flag generic introductions or conclusions at the same rate.
+
+Use the dates and qualifications above whenever these details are relevant. Do not blend a historical issue with current behavior, and do not treat a vendor's description of its own product as independent proof of accuracy.
+
+## 4. Common quality weaknesses in unstructured LLM drafts
+
+These habits can make prose weak for reviewers. They are not a validated list of detector triggers, and the skill does not assume that changing one will change a score:
+
+- No specifics: no named datasets, numbers, decisions, or failures, only generic claims.
+- Uniform polish: every sentence smooth, similar length, similar shape, every paragraph with the same arc.
+- Stock connectors and frames ("Furthermore", "plays a crucial role", "in today's rapidly evolving...").
+- A summary or "so what" sentence closing every paragraph.
+- Decorative synonyms, triplets, and participial tails that add no information.
+- Claims with no scope, baseline, or limitation.
+- Text that never reflects the author's own terminology, reasoning, or voice.
+
+The remedy is better writing, not disguise: ground substantive research claims in the project's real inputs, workflow, outputs, and verified literature; use the author's terminology and voice profile; connect sentences by real relations. Those practices help reviewers understand the research. Their effect on a detector's score is uncertain and must not be promised.
+
+## 5. What the agent does
+
+1. Reads the project and builds the brief and voice profile before drafting (`docs/project-intake.md`, `docs/voice-calibration.md`).
+2. Grounds every substantive research claim in evidence, verified literature, or explicit reasoning; uses project-specific anchors when they help the reader and never invents one.
+3. Uses the locked terminology; one name per concept.
+4. Avoids the pattern-level tells in `docs/prompt.md` section 4.
+5. States the authorship rung (SKILL.md section 4). Prefers rungs A and B. At C and D it says once that disclosure or author verification may be required by applicable policy, recommends that the author revise and verify, and offers the AI-use ledger. It does not predict detector scores.
+6. Treats `scripts/pattern_scan.py` output as questions about specificity, never as a score to drive down.
+
+## 6. What the agent must not do
+
+- Use humanizer, paraphraser, or "bypasser" tools or services; synonym spinning; round-trip translation.
+- Insert Unicode lookalikes, zero-width characters, deliberate typos, random punctuation, or unnatural phrasing.
+- Alter citations, numbers, methods, or findings to make a report look different.
+- Promise or target a score; claim text is "undetectable" or "human enough".
+- Hide AI assistance the policy requires to be disclosed, or invent a drafting history.
+- Treat detector output alone as proof that a person used or did not use AI.
+- Simulate human traits: no random sentence-length changes, filler, casual asides, invented anecdotes, or invented failed experiments. If the project contains a real decision, failure, or limitation, use it; if not, leave a placeholder or ask.
+
+## 7. Handling common requests
+
+| User says | Agent does |
+|---|---|
+| "Make it less AI-sounding" | Treat as a quality request: rebuild from the brief, apply the voice profile, add project-backed specifics, remove the pattern-level tells. No score promise |
+| "Make Turnitin show 0%" or "bypass the detector" | Decline the guarantee and the evasion in one or two sentences. Offer the rebuild above plus process documentation |
+| "My detector flagged this" | Section 8 |
+| "Which detector is best or accurate?" | Explain limits using `docs/detector-log.md`; separate vendor claims from independent studies |
+| "Can I use AI for this paper?" | Say it depends on the institution, supervisor, and venue policy; offer to help prepare a disclosure and the ledger |
+
+## 8. If text was already flagged
+
+1. Look at the actual report: tool, version, language, word count, highlighted passages. Do not read a highlight as a verdict on each sentence.
+2. Do not paraphrase the flagged passage mechanically. Re-derive it from the claim-evidence map and the author's own reasoning, in the author's voice, and have the author check it against the project.
+3. Gather genuine process evidence: outlines, successive drafts, version history, notes, source annotations, code commits, experiment logs, and the AI-use ledger. These must be real records, never made after the fact to imitate history.
+4. Follow the institution's review and appeal process, and describe the work honestly.
+
+## 9. Limits and fairness
+
+Independent studies have documented reliability and fairness concerns, though findings depend on the tools, languages, genres, and test sets evaluated (see `docs/detector-log.md` for sources and verification status). Results should never be the sole basis for adverse action. If an author is worried about false positives, keep a genuine writing record from the start.
+
+## 10. Process record
+
+Use `templates/ai-use-ledger.md` to record, as you go: which sections the author wrote, which the agent edited or drafted, what the agent was given, and what the author changed afterward. The ledger supports disclosure statements and any later review. It must stay truthful.
+
+## 11. Tools to recognize
+
+Turnitin AI Writing Detection and iThenticate, GPTZero, Originality.ai, Copyleaks, and similar products. Availability varies by institution; some institutions have disabled AI detection. Check what the author's institution actually uses before assuming anything.

@@ -1,0 +1,5 @@
+Retrieval-augmented generators can still state claims that the retrieved passages contradict. Standard XGBoost ignores this disagreement, because its split gain uses only gradient and Hessian statistics. EC-XGB subtracts an evidence-disagreement penalty from the split gain, so splits that mix supported and unsupported claims become less attractive to the tree learner.
+
+We evaluated EC-XGB on the two datasets described in Section 4. It raised macro-F1 by 1.9 points over the strongest baseline on Dataset-A. On Dataset-B the difference was 0.4 points, and the confidence interval included zero, so we do not claim an improvement there.
+
+The ablation removes the penalty term and keeps everything else fixed. Macro-F1 falls on both datasets, which suggests that the penalty contributes to the gain, although the ablation cannot show how much of it is due to the evidence features themselves.
